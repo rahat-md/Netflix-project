@@ -1,18 +1,26 @@
 // @ts-nocheck
-const slideshowElements = document.querySelectorAll(".slideshow-element");
+const tabItems = document.querySelectorAll(".tab-item");
+const tabContentItem = document.querySelectorAll(".tab-content-item");
 
-let countElements = 1;
-setInterval(() => {
-  countElements++;
+// Select tab content item
+function selectItem(e) {
+  removeBorder();
+  removeShow();
+  // Add border to current tab
+  this.classList.add("tab-border");
+  // Grab content item from DOM
+  const tabContentItem = document.querySelector(`#${this.id}-content`);
+  // Add show class
+  tabContentItem.classList.add("show");
+}
 
-  let currentElement = document.querySelector(".current");
+function removeBorder() {
+  tabItems.forEach((item) => item.classList.remove("tab-border"));
+}
 
-  currentElement.classList.remove("current");
+function removeShow() {
+  tabItems.forEach((item) => item.classList.remove("show"));
+}
 
-  if (countElements > slideshowElements.length) {
-    slideshowElements[0].classList.add("current");
-    countElements = 1;
-  } else {
-    currentElement.nextElementSibling.classList.add("current");
-  }
-}, 1000);
+// Listem for tab click
+tabItems.forEach((item) => item.addEventListener("click", selectItem));
